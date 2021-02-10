@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@+id/new_apteka_section"
+    >
+    <fragment
+        android:id="@+id/new_apteka_section"
+        android:name="ru.apteka.screen.aptekanew.presentation.view.NewAptekaFragment"
+        android:label="apteka_section"
+        tools:layout="@layout/new_apteka_fragment"
+        />
+
+    <fragment
+        android:id="@+id/category_list"
+        android:name="ru.apteka.screen.categorylist.presentation.view.CategoryListFragment"
+        android:label="category_list"
+        >
+        <argument
+            android:name="CATEGORY_ID"
+            app:argType="string"
+            />
+    </fragment>
+
+    <action
+        android:id="@+id/to_new_apteka_section"
+        app:destination="@id/new_apteka_section"
+        />
+
+    <action
+        android:id="@+id/to_category_list"
+        app:destination="@id/category_list"
+        />
+
+</navigation>

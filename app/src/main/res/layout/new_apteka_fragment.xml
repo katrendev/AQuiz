@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <import type="ru.apteka.screen.aptekanew.presentation.view.NewAptekaItemViewTypes" />
+
+        <variable
+            name="vm"
+            type="ru.apteka.screen.aptekanew.presentation.viewmodel.NewAptekaViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".screen.apteka.presentation.view.AptekaFragment"
+        >
+
+        <include
+            android:id="@+id/toolbar"
+            layout="@layout/new_main_search"
+            vm="@{vm.aptekaSearchViewModel}"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:isRefreshing="@{vm.isRefreshing}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:onRefresh="@{vm::refresh}"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                items="@{vm.items}"
+                viewTypes="@{NewAptekaItemViewTypes.instance}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_bg"
+                app:layout_constraintTop_toBottomOf="@id/toolbar"
+                tools:itemCount="2"
+                tools:listitem="@layout/category_tile_item"
+                />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

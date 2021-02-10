@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <variable
+            name="vm"
+            type="ru.apteka.screen.aptekanew.presentation.viewmodel.BannerTileItemViewModel"
+            />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            imageUrl="@{vm.imageUrl}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@{vm.isFirstColumn ? @dimen/margin_16dp : @dimen/margin_4dp}"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="@{vm.isFirstColumn ? @dimen/margin_4dp : @dimen/margin_16dp}"
+            android:layout_marginBottom="4dp"
+            android:onClick="@{()->vm.click()}"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_logo_png"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

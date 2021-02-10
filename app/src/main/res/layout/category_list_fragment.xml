@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="ru.apteka.screen.categorylist.presentation.view.CategoryItemViewTypes" />
+
+        <variable
+            name="vm"
+            type="ru.apteka.screen.categorylist.presentation.viewmodel.CategoryListViewModel" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            onNavigationBackClick="@{()->vm.backClick()}"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_tabbar_bg"
+            app:navigationIcon="@drawable/ic_back"
+            app:popupTheme="@style/Misolutions.Toolbar"
+            app:title="@{vm.title}"
+            app:titleTextColor="@color/color_white"
+            tools:title="Молочные смеси"
+            />
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar"
+            app:isRefreshing="@{vm.isRefreshing}"
+            app:onRefresh="@{vm::refresh}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/category_list"
+                items="@{vm.items}"
+                viewTypes="@{CategoryItemViewTypes.instance}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <include
+            isVisible="@{vm.isError}"
+            layout="@layout/error" />
+
+        <include
+            isVisible="@{vm.isProgress}"
+            layout="@layout/progress" />
+    </RelativeLayout>
+</layout>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    >
+
+    <data>
+
+        <import type="ru.apteka.R" />
+
+        <variable
+            name="vm"
+            type="ru.apteka.screen.categorylist.presentation.viewmodel.CategoryItemViewModel"
+            />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:minHeight="56dp"
+        android:onClick="@{()->vm.click()}"
+        android:orientation="horizontal"
+        android:paddingLeft="@{vm.height * 48}"
+        >
+
+        <ImageView
+            android:id="@+id/imageView"
+            imageUrl="@{vm.icon}"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/category_list_item_icon_bg"
+            tools:src="@android:drawable/ic_dialog_alert"
+            />
+
+        <TextView
+            android:id="@+id/category_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="@{vm.name}"
+            android:textSize="16sp"
+            android:transitionName="title"
+            tools:text="category title"
+            />
+
+        <ImageView
+            android:id="@+id/expand"
+            idSrc="@{vm.isExpanded ? R.drawable.ic_keyboard_arrow_up : R.drawable.ic_keyboard_arrow_down}"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="16dp"
+            android:layout_marginRight="16dp"
+            app:visibility="@{vm.hasExpander}"
+            tools:rotation="90"
+            tools:srcCompat="@drawable/ic_keyboard_arrow_up"
+            />
+
+    </LinearLayout>
+</layout>

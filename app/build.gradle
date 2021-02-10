@@ -1,0 +1,149 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+def appVersionMajor = 1
+def appVersionMinor = 0
+def appVersionPatch = 0
+def todayBuildNumber = 1
+def versionNameText = "${appVersionMajor}.${appVersionMinor}.${appVersionPatch}"
+def versionStamp = "(${getBuildVersionDate()}${twoDigits(todayBuildNumber)})" //(20030201) yyMMddVV  VV - номер билда сегодня 01, 02, 03..
+def tempVersionCode = 10001
+
+static def twoDigits(int number) {
+    if (number < 9) {
+        "0$number"
+    } else {
+        "$number"
+    }
+}
+
+static def getBuildVersionDate() {
+    return new Date().format('yyMMdd', TimeZone.getTimeZone("GMT+3"))
+}
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        applicationId "ru.apteka"
+        minSdkVersion 16
+        targetSdkVersion 29
+        versionCode tempVersionCode
+
+        versionName = versionNameText
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        def outputFileName = "apteka-ru-$versionName $versionStamp"
+        setProperty("archivesBaseName", outputFileName)
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+    signingConfigs {
+        debug {
+            storeFile file("$rootProject.projectDir/cert/debug.keystore")
+        }
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            resValue "string", "app_name", "Аптека.RU"
+            def versionWithStamp = "$versionNameText $versionStamp"
+            resValue "string", "version_number_with_stamp", versionWithStamp
+        }
+        debug {
+            applicationIdSuffix '.debug'
+            versionNameSuffix '-DEBUG'
+            resValue "string", "app_name", "Dev Аптека.RU"
+            def versionWithStamp = "$versionNameText$versionNameSuffix $versionStamp"
+            resValue "string", "version_number_with_stamp", versionWithStamp
+        }
+    }
+    buildFeatures {
+        dataBinding = true
+    }
+
+    androidExtensions {
+        experimental = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //support
+    def SUPPORT_VERSION = '1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation "com.google.android.material:material:1.2.0"
+    implementation "androidx.cardview:cardview:$SUPPORT_VERSION"
+    implementation 'androidx.core:core-ktx:1.3.2'
+
+    def nav_version = "2.3.0"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    //noinspection GradleDependency
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.2'
+    //3.13 will work with only api 21+  https://medium.com/square-corner-blog/okhttp-3-13-requires-android-5-818bb78d07ce
+
+    //dagger 2
+    def DAGGER_VERSION = '2.23.2'
+    implementation "com.google.dagger:dagger-android:$DAGGER_VERSION"
+    implementation "com.google.dagger:dagger-android-support:$DAGGER_VERSION"
+    kapt "com.google.dagger:dagger-android-processor:$DAGGER_VERSION"
+    kapt "com.google.dagger:dagger-compiler:$DAGGER_VERSION"
+
+    // LiveData + ViewModel
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation "androidx.legacy:legacy-support-v4:$SUPPORT_VERSION"
+    kapt 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+
+    //test
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // images
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.10.0'
+    implementation 'com.github.bumptech.glide:annotations:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.kirich1409.svgplugin:svg-glide4-plugin:1.2.1'
+    //stetho
+    implementation 'com.facebook.stetho:stetho:1.5.1'
+    implementation 'com.facebook.stetho:stetho-okhttp3:1.5.1'
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    //Leakcanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:1.6.3'
+
+    //Barcode scanner. 3.3.1 for android below 19
+    //noinspection GradleDependency
+    implementation 'com.google.zxing:core:3.3.1'
+    implementation('com.journeyapps:zxing-android-embedded:3.6.0') { transitive = false }
+}

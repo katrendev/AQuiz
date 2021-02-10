@@ -1,0 +1,15 @@
+<resources>
+
+    <string name="repeat">Повторить</string>
+    <string name="server_error_alert_message">Нет связи с сервисом. Проверьте ваше Интернет соединение или повторите попытку</string>
+
+    <string name="stub_error">Ошибка</string>
+    <string name="search">Поиск</string>
+
+
+    <string name="cancellation">Отменa</string>
+
+    <string name="no_speech_recognition_support">Устройство не поддерживает голосовой ввод</string>
+    <string name="good">Хорошо</string>
+
+</resources>

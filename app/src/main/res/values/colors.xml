@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_primary">#136acb</color>
+    <color name="color_white">#ffffff</color>
+    <color name="color_transparent">#00000000</color>
+    <color name="color_text_black">#de000000</color>
+
+    <!-- START day-night themed UI colors -->
+    <color name="color_bg">#ffffff</color>
+    <color name="color_tabbar_bg">@color/color_primary</color>
+    <color name="color_icon">#000000</color>
+    <color name="color_icon_20">#33000000</color>
+    <color name="color_icon_54">#8a000000</color>
+    <color name="color_icon_2">@color/color_primary</color>
+    <color name="color_text">@color/color_text_black</color>
+    <color name="color_hint">#61000000</color>
+
+    <!-- END day-night themed UI colors -->
+
+</resources>

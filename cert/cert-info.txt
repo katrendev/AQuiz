@@ -1,0 +1,8 @@
+
+Certificate SHA-1 Fingerprint:          86:7B:CB:68:E1:7A:FE:CA:1D:69:46:BD:DE:05:95:C3:42:2F:27:E6
+
+Debug signing certificate:
+    - File: debug.keystore
+    - Key name: androiddebugkey
+    - Keystore password: android
+    - Key password: android
